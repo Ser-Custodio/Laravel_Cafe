@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('tableaubord');
 });
 
 Route::get('tableaubord', function () {
