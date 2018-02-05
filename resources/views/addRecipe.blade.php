@@ -5,16 +5,40 @@ Boissons
 @endsection
 
 @section('TitlePageName')
-Ajouter une Recette
+Recette de: {{ $boisson->name }}
 @endsection
 @section('content')
 <div class="container ">
     <form class="well col-md-offset-2 col-md-8" action="" method="post">
         {{ csrf_field() }}
-        <label class="col-md-4"><b>Name:</b></label> <input class="col-md-6" type="text" name="name" required="required"><br><br>
-        <label class="col-md-4"><b>Price:</b></label> <input class="col-md-6" type="text" name="price" required="required"><br><br>
-        <button class="btn btn-lg btn-primary" type="submit">Recette</button>
-    </form>
+        <label class="col-md-4"><b>Ingredient:</b></label> 
+        <select name="ingredient_id" class="col-md-6" required="required">
+        	@foreach ($ingredients as $unIngredient)
+                <option value = "{{ $unIngredient->id }}">{{ $unIngredient->name }}</option>
+            @endforeach
+        </select>
+        <br><br>
+        <label class="col-md-4"><b>Quantity:</b></label> <input class="col-md-6" type="text" name="quantity" required="required"><br><br>
+        <button class="btn btn-lg btn-primary" type="submit">Add Ingredient</button>
+	</form>
+	<div class="col-sm-offset-3 col-md-6">
+	<table class="table table-responsive table-hover table-bordered table-editBoissons col-sm-12">
+                <tr>                
+                    <th>INGREDIENT</th> 
+                    <th>QUANTITY</th>
+                </tr>
+                @foreach($recette as $unIng)
+                <tr>               
+                    <td>{{ $unIng->name }} </td>
+                    <td>{{ $unIng->pivot->quantity }}</td>
+                    <td><button class='btn btn-sm btn-info'>Delete</button></td>
+                </tr>
+                @endforeach
+            </table>
+            </div>
+</div>
+<div>
+	<a href={{ url('boissons')}}><button class="btn btn-lg btn-success">Validate Recipe</button></a>
 </div>
 @endsection
 

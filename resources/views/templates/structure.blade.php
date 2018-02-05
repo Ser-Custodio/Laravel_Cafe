@@ -33,6 +33,7 @@
             <div class="title m-b-md">
                 @yield('TitlePageName')
             </div>
+            @include('flash-message')
             @yield('content')
         </div>
     </div>

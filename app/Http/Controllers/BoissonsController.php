@@ -20,6 +20,9 @@ class BoissonsController extends Controller {
         return view('editBoissons', ["boisson" => $boisson, "recette" => $recette]);
 	}
 
+	//Add an ingredient to our drink and returns to the same page until we say its finished
+	
+
 	public function prixCroissant(){
 		$requette = Boisson::orderBy('price')->get();
 		return view('triBoissons', ["boisson" => $requette]);
@@ -29,6 +32,37 @@ class BoissonsController extends Controller {
 		return view('addDrink');
 	}
 
+	public function addRecipe (Request $request, Boisson $boisson){
+		$data =[
+
+			'ingredient_id' => $request->input('ingredient_id'),
+			'quantity' => $request->input('quantity'),
+			'boisson' => $boisson
+		];
+		
+		$boisson->ingredients()->attach($request->input('ingredient_id'),['quantity'=>$request->input('quantity')]);
+		return redirect()->route('formRecipe', $data);
+	}
+
+	public function formRecipe (Boisson $boisson){
+		$ingredients = Ingredient::all();
+		$data = [
+				'boisson' => $boisson,
+				'ingredients' => $ingredients,
+				'recette' => $boisson->ingredients
+		];
+		return view('addRecipe', $data);
+	}
+
+
+
+
+	public function modDrink(Boisson $boisson){
+		return view('modifyDrink', ['boisson' => $boisson]);
+	}
+
+	
+
 	public function store(Request $request){
 
 		$data = [
@@ -37,11 +71,7 @@ class BoissonsController extends Controller {
 		];
 
 		$addDrink = Boisson::create($data);
-		return redirect('boissons');
-	}
-
-	public function modDrink(Boisson $boisson){
-		return view('modifyDrink', ['boisson' => $boisson]);
+		return redirect()->route('addRecipe',['boisson' => $addDrink->id]);
 	}
 
 	public function update(Request $request, $boisson){

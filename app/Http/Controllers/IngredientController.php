@@ -43,9 +43,8 @@ class IngredientController extends Controller
             'name' => $request->input('name'),
             'stock' => $request->input('stock'),
         ];
-
         $addIng = Ingredient::create($data);
-        return redirect()->route('ingredients.index');    
+        return redirect()->route('ingredients.index')->with('success','Your ingredient '.$addIng->name.' was added to the liste!');    
     }
 
     /**
@@ -78,7 +77,6 @@ class IngredientController extends Controller
         $modIng = Ingredient::find($ingredient);
         
         $data = [
-            'name' => $request->input('name'),
             'stock' => $request->input('stock'),
         ];
         
@@ -95,6 +93,16 @@ class IngredientController extends Controller
      */
     public function destroy(Ingredient $ingredient)
     {
+        if($ingredient->boisson->count() > 0){
+            $liste = '';
+            $boissons = $ingredient->boisson;
+            foreach ($boissons as $boisson){
+                $liste .= "<li>" . $boisson->name ."; </li>";
+            }
+            $info = "Can't delete this Ingredient. Associated with drinks: " . $liste;
+            return back()->with('error', $info);
+        }
         $ingredient->delete();
-        return redirect()->route('ingredients.index');    }
+        return redirect()->route('ingredients.index')->with('warning','The ingredient '. $ingredient->name .' has been deleted');    
+    }
 }

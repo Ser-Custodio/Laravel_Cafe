@@ -25,7 +25,8 @@ Route::get('boissons/{boisson}', 'BoissonsController@editBoissons')->name('editB
 Route::get('triBoissons', 'BoissonsController@prixCroissant');
 Route::get('addDrink', 'BoissonsController@addDrink');
 Route::post('addDrink', 'BoissonsController@store');
-// Route::get('boissons/{boisson}/ingredients', 'BoissonsController@addRecipe');
+Route::get('boissons/{boisson}/ingredients', 'BoissonsController@formRecipe')->name('formRecipe');
+Route::post('boissons/{boisson}/ingredients', 'BoissonsController@addRecipe')->name('addRecipe');
 Route::get('modifyDrink/{boisson}', 'BoissonsController@modDrink')->name('modifyDrink');
 Route::put('modifyDrink/{boisson}', 'BoissonsController@update');
 Route::delete('boissons/{boisson}', 'BoissonsController@delete')->name('deleteDrink');
