@@ -20,7 +20,7 @@ class BoissonsController extends Controller {
         return view('editBoissons', ["boisson" => $boisson, "recette" => $recette]);
 	}
 
-	//Add an ingredient to our drink and returns to the same page until we say its finished
+
 	
 
 	public function prixCroissant(){
@@ -32,6 +32,7 @@ class BoissonsController extends Controller {
 		return view('addDrink');
 	}
 
+	//Add an ingredient to our drink and returns to the same page until we say its finished
 	public function addRecipe (Request $request, Boisson $boisson){
 		$data =[
 
@@ -45,13 +46,19 @@ class BoissonsController extends Controller {
 	}
 
 	public function formRecipe (Boisson $boisson){
-		$ingredients = Ingredient::all();
+		$ingredients = Ingredient::orderBy('name')->get();
 		$data = [
 				'boisson' => $boisson,
 				'ingredients' => $ingredients,
 				'recette' => $boisson->ingredients
 		];
 		return view('addRecipe', $data);
+	}
+
+	public function deleteIng (Request $request, Boisson $boisson){
+		$ingredient = $request->input('ingredient');
+		$boisson->ingredients()->detach($ingredient);
+		return redirect()->route('formRecipe', ['boisson' => $boisson]);
 	}
 
 
