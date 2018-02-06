@@ -56,13 +56,10 @@ Edit-Boissons
             </form>
         </div>
         <div class="visible-xs"><br></div>
-        <div class="col-sm-offset-3 col-sm-3">
-            <a href="{{route('formRecipe', ['id'=>$boisson->id])}}"><button class="btn btn-lg btn-success">Modifier Recette</button></a>  
-        </div>
-       
-        
-        
-</div>
+            <div class="col-sm-offset-3 col-sm-3">
+                <a href="{{route('formRecipe', ['id'=>$boisson->id])}}"><button class="btn  btn-lg btn-success">Modifier Recette</button></a>  
+            </div>
+    </div>
 </div>
 <br>
 

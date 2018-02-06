@@ -32,6 +32,18 @@ class BoissonsController extends Controller {
 		return view('addDrink');
 	}
 
+
+	//Returns the form view and passes the ingredient list
+	public function formRecipe (Boisson $boisson){
+		$ingredients = Ingredient::orderBy('name')->get();
+		$data = [
+				'boisson' => $boisson,
+				'ingredients' => $ingredients,
+				'recette' => $boisson->ingredients
+		];
+		return view('addRecipe', $data);
+	}
+
 	//Add an ingredient to our drink and returns to the same page until we say its finished
 	public function addRecipe (Request $request, Boisson $boisson){
 		$data =[
@@ -45,15 +57,7 @@ class BoissonsController extends Controller {
 		return redirect()->route('formRecipe', $data);
 	}
 
-	public function formRecipe (Boisson $boisson){
-		$ingredients = Ingredient::orderBy('name')->get();
-		$data = [
-				'boisson' => $boisson,
-				'ingredients' => $ingredients,
-				'recette' => $boisson->ingredients
-		];
-		return view('addRecipe', $data);
-	}
+	
 
 	public function deleteIng (Request $request, Boisson $boisson){
 		$ingredient = $request->input('ingredient');

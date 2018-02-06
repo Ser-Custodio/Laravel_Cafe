@@ -13,8 +13,8 @@
     }
 
     .flex-center {
-        /* align-items: center; */
-        margin-top: 50px;
+        align-items: center; 
+        /*margin-top: 50px;*/
         display: flex;
         justify-content: center;
     }
@@ -90,4 +90,8 @@
         font-weight: bold;
         font-size: 1.2em;
     }
+
+/*    .login{
+        margin-top: 100px;
+    }*/
 </style>

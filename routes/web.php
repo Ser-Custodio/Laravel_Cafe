@@ -26,8 +26,8 @@ Route::get('triBoissons', 'BoissonsController@prixCroissant');
 Route::get('addDrink', 'BoissonsController@addDrink');
 Route::post('addDrink', 'BoissonsController@store');
 Route::get('boissons/{boisson}/ingredients', 'BoissonsController@formRecipe')->name('formRecipe');
-Route::delete('boissons/{boisson}/ingredients', 'BoissonsController@deleteIng')->name('delIngRecipe');
 Route::post('boissons/{boisson}/ingredients', 'BoissonsController@addRecipe')->name('addRecipe');
+Route::delete('boissons/{boisson}/ingredients', 'BoissonsController@deleteIng')->name('delIngRecipe');
 Route::get('modifyDrink/{boisson}', 'BoissonsController@modDrink')->name('modifyDrink');
 Route::put('modifyDrink/{boisson}', 'BoissonsController@update');
 Route::delete('boissons/{boisson}', 'BoissonsController@delete')->name('deleteDrink');
@@ -42,3 +42,9 @@ Route::get('ventes', 'VentesController@listeVentes');
 
 // Routes pour le Monnayeur
 Route::get('monnayeur', 'MonnayeurController@coins');
+
+
+// Routes pour authentification
+Auth::routes();
+
+Route::get('/', 'HomeController@index')->name('home');
