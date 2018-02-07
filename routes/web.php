@@ -13,11 +13,11 @@
 
 Route::get('/', function () {
     return view('tableaubord');
-});
+})->middleware('auth');
 
 Route::get('tableaubord', function () {
-    return view('tableaubord')->middleware('auth');
-});
+    return view('tableaubord');
+})->middleware('auth');
 
 // Routes pour les boissons
 Route::get('boissons', 'BoissonsController@listeBoissons')->middleware('auth');
@@ -37,7 +37,7 @@ Route::resource('ingredients', 'IngredientController')->middleware('auth');
 
 
 // Routes pour les Ventes
-Route::get('ventes', 'VentesController@listeVentes')->middleware('auth');
+Route::resource('ventes', 'VenteController');
 
 
 // Routes pour le Monnayeur
@@ -48,3 +48,5 @@ Route::get('monnayeur', 'MonnayeurController@coins')->middleware('auth');
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
+
+Route::get('/machine', 'BoissonsController@listeBoissonsDispo');

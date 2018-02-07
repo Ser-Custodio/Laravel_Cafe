@@ -1,4 +1,4 @@
-@extends('templates/structure')
+@extends('templates.structure')
 
 @section('title')
     Ventes
@@ -16,13 +16,15 @@
                 <th>Date - Heure</th>
                 <th>Boisson</th>
                 <th>Sucre</th>
+                <th>User</th>
             </tr>
             @foreach ($sales as $sale)
                 <tr>
-                    <td>{{ $sale["NumVente"] }}</td>
-                    <td>{{ $sale["Date"] }}</td>
-                    <td>{{ $sale["Boisson"] }}</td>
-                    <td>{{ $sale["Sucre"] }}</td>
+                    <td>{{ $sale->id }}</td>
+                    <td>{{ $sale->created_at }}</td>
+                    <td>{{ $sale->boisson->name }}</td>
+                    <td>{{ $sale->nbSugar }}</td>
+                    <td>Username</td>
                 </tr>
             @endforeach
         </table>

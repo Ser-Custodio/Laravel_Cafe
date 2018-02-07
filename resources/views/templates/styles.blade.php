@@ -75,7 +75,7 @@
     }
 
     .tableauVentes td{
-        width : 25%; 
+        width : 20%;
     }
     
     .tableRecette td{
@@ -84,6 +84,12 @@
 
     .table-editBoissons td{
         width: 33%;
+    }
+
+    .tableSugar tr,td,th{
+        width: 10%;
+        align-items: center;
+        justify-content: center;
     }
 
     form{

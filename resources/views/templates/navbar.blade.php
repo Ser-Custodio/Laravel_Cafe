@@ -20,7 +20,7 @@
 					<li><a href="{{route('ingredients.index')}}">Ingredients</a></li>
 					<li><a href="{{url('monnayeur')}}">Monnayeur</a></li>
 					<li><a href="{{url('triBoissons')}}">triBoisson</a></li>
-					<li><a href="{{url('ventes')}}">Ventes</a></li>
+					<li><a href="{{route('ventes.index')}}">Ventes</a></li>
 				</ul>
 
 				<!-- Right Side Of Navbar -->

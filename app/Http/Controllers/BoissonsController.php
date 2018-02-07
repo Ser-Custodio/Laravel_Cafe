@@ -14,7 +14,10 @@ class BoissonsController extends Controller {
 		$boissons = Boisson::orderBy('name','asc')->get();
 		return view('boissons', ["boisson" => $boissons]);
 	}
-
+    public function listeBoissonsDispo(){
+        $boissons = Boisson::orderBy('name','asc')->get();
+        return view('front_office.machine', ["boisson" => $boissons]);
+    }
 	public function editBoissons(Boisson $boisson){
 		$recette = $boisson->ingredients;
         return view('editBoissons', ["boisson" => $boisson, "recette" => $recette]);
