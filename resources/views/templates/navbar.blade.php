@@ -15,7 +15,7 @@
 			<div class="collapse navbar-collapse" id="app-navbar-collapse">
 				<!-- Left Side Of Navbar -->
 				<ul class="nav navbar-nav">
-					<li><a href="{{url('tableaubord')}}">Tableau de Bord</a></li>
+					<li><a href="{{route('machine')}}">Machine</a></li>
 					<li><a href="{{url('boissons')}}">Boissons</a></li>
 					<li><a href="{{route('ingredients.index')}}">Ingredients</a></li>
 					<li><a href="{{url('monnayeur')}}">Monnayeur</a></li>

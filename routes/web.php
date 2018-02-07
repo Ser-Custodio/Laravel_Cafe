@@ -49,4 +49,4 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
 
-Route::get('/machine', 'BoissonsController@listeBoissonsDispo');
+Route::get('/', 'BoissonsController@listeBoissonsDispo')->name('machine');

@@ -10,7 +10,8 @@
 
 @section('content')
     <div class='displays formula'>
-        <form method="post" action="/machine">
+        <form method="post" action="{{ route('ventes.store') }}">
+            {{ csrf_field() }}
             Available Drink: <br>
             <div class="row tableau table-responsive">
                     <table class="table  table-hover table-bordered table-editBoissons col-sm-12">
@@ -22,7 +23,7 @@
                         @foreach ($boisson as $uneBoisson)
                             <tr>
                                 <td>{{ $uneBoisson->name }} </td>
-                                <td>{{ $uneBoisson->price/100 }}€</td>
+                                <td>{{ number_format($uneBoisson->price/100,2) }}€</td>
                                 <td><input type="radio" name="drink" value="{{ $uneBoisson->id }}"></td>
                             </tr>
                         @endforeach
@@ -48,7 +49,7 @@
                     <td><input type="radio" name="nbSugar" value="5"></td>
                 </tr>
             </table>
-            <br><input class='btn btn-primary' type="submit" name="submit">
+            <br><button class='btn btn-lg btn-success' type="submit">Commander</button>
         </form>
     </div>
 @endsection

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Vente;
 use App\Boisson;
+use Illuminate\Support\Facades\Auth;
+
 class VenteController extends Controller
 {
     /**
@@ -36,7 +38,17 @@ class VenteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::id();
+        if (!Auth::check()){
+            $user = 0;
+        };
+        $data = [
+            'nbSugar' => $request->input('nbSugar'),
+            'boisson_id' => $request->input('drink'),
+            'user_id' => $user
+        ];
+        $vente = Vente::create($data);
+        return redirect()->route('machine')->with('success','Enjoy your Drink');
     }
 
     /**

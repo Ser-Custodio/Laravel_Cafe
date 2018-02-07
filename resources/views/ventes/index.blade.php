@@ -24,7 +24,7 @@
                     <td>{{ $sale->created_at }}</td>
                     <td>{{ $sale->boisson->name }}</td>
                     <td>{{ $sale->nbSugar }}</td>
-                    <td>Username</td>
+                    <td>{{ $sale->user->name }}</td>
                 </tr>
             @endforeach
         </table>

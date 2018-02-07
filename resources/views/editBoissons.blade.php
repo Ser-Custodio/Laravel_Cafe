@@ -23,7 +23,7 @@ Edit-Boissons
                 <tr>                    
                     <td>{{ $boisson->id }} </td>
                     <td>{{ $boisson->name }} </td>
-                    <td>{{ $boisson->price }} </td>       
+                    <td>{{ number_format($boisson->price/100,2) }} </td>
                 </tr>
             </table>           
         </div>
