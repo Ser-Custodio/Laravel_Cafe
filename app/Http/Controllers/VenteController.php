@@ -16,9 +16,14 @@ class VenteController extends Controller
      */
     public function index()
     {
-        $ventes = Vente::all();
-        return view('ventes.index',['sales' => $ventes]);
+        if (Auth::check()) {
+            $ventes = Vente::all();
+            return view('ventes.index', ['sales' => $ventes]);
+        }
+        return redirect()->route('machine')->with('error','Hahahaha');
     }
+
+
 
     /**
      * Show the form for creating a new resource.
