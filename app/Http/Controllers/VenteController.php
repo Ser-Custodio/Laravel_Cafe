@@ -74,18 +74,6 @@ class VenteController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-//    public function update(Request $request, $ingredient)
-//    {
-//        $modIng = Ingredient::find($ingredient);
-//
-//        $data = [
-//            'stock' => $request->input('stock'),
-//        ];
-//
-//        $modIng->update($data);
-//
-//        return redirect()->route('ingredients.index');
-//    }
     public function store(Request $request)
     {
         $user = Auth::id();
@@ -100,6 +88,11 @@ class VenteController extends Controller
             'user_id' => $user
         ];
         $vente = Vente::create($data);
+
+        // Modifier le stock du sucre
+        $sucre = Ingredient::where('name','Sucre')->first();
+        $sucre->stock-=$request->input('nbSugar');
+        $sucre->save();
 
         return redirect()->route('machine')->with('success', 'Enjoy your Drink');
     }
