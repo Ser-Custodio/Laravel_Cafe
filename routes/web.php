@@ -20,20 +20,21 @@ Route::get('tableaubord', function () {
 })->middleware('auth');
 
 // Routes pour les boissons
-Route::get('boissons', 'BoissonsController@listeBoissons')->middleware('auth');
-Route::get('boissons/{boisson}', 'BoissonsController@editBoissons')->name('editBoissons')->middleware('auth');
-Route::get('triBoissons', 'BoissonsController@prixCroissant')->middleware('auth');
-Route::get('addDrink', 'BoissonsController@addDrink')->middleware('auth');
-Route::post('addDrink', 'BoissonsController@store')->middleware('auth');
-Route::get('boissons/{boisson}/ingredients', 'BoissonsController@formRecipe')->name('formRecipe')->middleware('auth');
-Route::post('boissons/{boisson}/ingredients', 'BoissonsController@addRecipe')->name('addRecipe')->middleware('auth');
-Route::delete('boissons/{boisson}/ingredients', 'BoissonsController@deleteIng')->name('delIngRecipe')->middleware('auth');
-Route::get('modifyDrink/{boisson}', 'BoissonsController@modDrink')->name('modifyDrink')->middleware('auth');
-Route::put('modifyDrink/{boisson}', 'BoissonsController@update')->middleware('auth');
-Route::delete('boissons/{boisson}', 'BoissonsController@delete')->name('deleteDrink')->middleware('auth');
+Route::get('boissons', 'BoissonsController@listeBoissons')->name('triDrinks')->middleware('auth','role');
+Route::get('triBoissons', 'BoissonsController@prixCroissant')->name('triPrix')->middleware('auth','role');
+
+Route::get('boissons/{boisson}', 'BoissonsController@editBoissons')->name('editBoissons')->middleware('auth','role');
+Route::get('addDrink', 'BoissonsController@addDrink')->middleware('auth','role');
+Route::post('addDrink', 'BoissonsController@store')->middleware('auth','role');
+Route::get('boissons/{boisson}/ingredients', 'BoissonsController@formRecipe')->name('formRecipe')->middleware('auth','role');
+Route::post('boissons/{boisson}/ingredients', 'BoissonsController@addRecipe')->name('addRecipe')->middleware('auth','role');
+Route::delete('boissons/{boisson}/ingredients', 'BoissonsController@deleteIng')->name('delIngRecipe')->middleware('auth','role');
+Route::get('modifyDrink/{boisson}', 'BoissonsController@modDrink')->name('modifyDrink')->middleware('auth','role');
+Route::put('modifyDrink/{boisson}', 'BoissonsController@update')->middleware('auth','role');
+Route::delete('boissons/{boisson}', 'BoissonsController@delete')->name('deleteDrink')->middleware('auth','role');
 
 // Routes pour les Ingredients
-Route::resource('ingredients', 'IngredientController')->middleware('auth');
+Route::resource('ingredients', 'IngredientController')->middleware(['auth','role']);
 
 
 // Routes pour les Ventes
@@ -41,12 +42,12 @@ Route::resource('ventes', 'VenteController');
 
 
 // Routes pour le Monnayeur
-Route::get('monnayeur', 'MonnayeurController@coins')->middleware('auth');
+Route::get('monnayeur', 'MonnayeurController@coins')->middleware('auth','role');
 
 
 // Routes pour authentification
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
+Route::get('/', 'HomeController@index')->name('home')->middleware('auth','role');
 
 Route::get('/', 'BoissonsController@listeBoissonsDispo')->name('machine');

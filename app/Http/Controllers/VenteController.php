@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ingredient;
 use Illuminate\Http\Request;
 use App\Vente;
 use App\Boisson;
@@ -16,13 +17,44 @@ class VenteController extends Controller
      */
     public function index()
     {
-        if (Auth::check()) {
-            $ventes = Vente::all();
-            return view('ventes.index', ['sales' => $ventes]);
+        $userId = Auth::id();
+        if (!Auth::check()) {
+            return redirect()->route('machine')->with('error', 'You don\'t have permission for that');
         }
-        return redirect()->route('machine')->with('error','Hahahaha');
-    }
+        $ventes = Vente::orderBy('id');
+        $boissons = Boisson::orderBy('name');
+       // $count = Boisson::orderBy('id');
 
+        if (Auth::user()->role === 'client') {
+            $ventes->where('user_id', $userId);
+            $boissons->whereHas('ventes', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            })->get();
+//            foreach ($boissons as $boisson) {
+                //$count->withCount('ventes', function ($query) use ($userId) {
+                //    $query->where('user_id', $userId);
+               // })->get();
+        }
+        //$count = $count->get();
+
+        $ventes = $ventes->get();
+        $total = $ventes->sum('price');
+        $boissons = $boissons->get();
+
+        return view('ventes.index', ['sales' => $ventes, 'total' => $total, 'boissons' => $boissons/*, 'count'=>$count*/]);
+
+        // THE CODE WE HAD BEFORE
+
+//        }else if (Auth::user()->role === 'client') {
+//            $ventes = Vente::orderBy('id')->where('user_id', $userId)->get();
+//            $total = $ventes->sum('price');
+//            return view('ventes.index', ['sales' => $ventes, 'total' => $total]);
+//        }else{
+//            $ventes = Vente::all();
+//            $ventes->sum('price');
+//            return view('ventes.index', ['sales'=> $ventes, 'total' => $total]);
+//        }
+    }
 
 
     /**
@@ -38,28 +70,44 @@ class VenteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
+
+//    public function update(Request $request, $ingredient)
+//    {
+//        $modIng = Ingredient::find($ingredient);
+//
+//        $data = [
+//            'stock' => $request->input('stock'),
+//        ];
+//
+//        $modIng->update($data);
+//
+//        return redirect()->route('ingredients.index');
+//    }
     public function store(Request $request)
     {
         $user = Auth::id();
-        if (!Auth::check()){
-            $user = 0;
+        if (!Auth::check()) {
+            $user = 1;
         };
+        $price = Boisson::find($request->input('drink'))->price;
         $data = [
             'nbSugar' => $request->input('nbSugar'),
             'boisson_id' => $request->input('drink'),
+            'price' => $price,
             'user_id' => $user
         ];
         $vente = Vente::create($data);
-        return redirect()->route('machine')->with('success','Enjoy your Drink');
+
+        return redirect()->route('machine')->with('success', 'Enjoy your Drink');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -70,7 +118,7 @@ class VenteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -81,8 +129,8 @@ class VenteController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -93,7 +141,7 @@ class VenteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

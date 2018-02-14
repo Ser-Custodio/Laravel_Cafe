@@ -23,17 +23,17 @@ class BoissonsController extends Controller
         return view('front_office.machine', ["boisson" => $boissons]);
     }
 
+    public function prixCroissant()
+    {
+        $requette = Boisson::orderBy('price')->get();
+        return view('boissons', ["boisson" => $requette]);
+    }
+
+
     public function editBoissons(Boisson $boisson)
     {
         $recette = $boisson->ingredients;
         return view('editBoissons', ["boisson" => $boisson, "recette" => $recette]);
-    }
-
-
-    public function prixCroissant()
-    {
-        $requette = Boisson::orderBy('price')->get();
-        return view('triBoissons', ["boisson" => $requette]);
     }
 
     public function addDrink()
@@ -58,7 +58,6 @@ class BoissonsController extends Controller
     public function addRecipe(Request $request, Boisson $boisson)
     {
         $data = [
-
             'ingredient_id' => $request->input('ingredient_id'),
             'quantity' => $request->input('quantity'),
             'boisson' => $boisson

@@ -7,6 +7,10 @@
         height: 100vh;
         margin: 0;
     }
+    form{
+        font-weight: bold;
+        font-size: 1.2em;
+    }
 
     .full-height {
         height: 100vh;
@@ -74,9 +78,9 @@
         font-size: 1.2em;
     }
 
-    .tableauVentes td{
-        width : 20%;
-    }
+    .tableauSales td{
+         width :15%;
+     }
     
     .tableRecette td{
         width : 33%; 
@@ -87,16 +91,23 @@
     }
 
     .tableSugar tr,td,th{
-        width: 10%;
+        width: auto;
         align-items: center;
         justify-content: center;
     }
 
-    form{
-        font-weight: bold;
+
+
+    .table-boissons tr,td,th{
+        width: 33%;
         font-size: 1.2em;
+        align-items: center;
+        justify-content: center;
     }
 
+    .search-table{
+        font-size: 1.15em;
+    }
 /*    .login{
         margin-top: 100px;
     }*/

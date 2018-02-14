@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar navbar-inverse navbar-fixed-top menu">
+    <nav class="navbar navbar-inverse navbar-static-top menu">
         <div class="container-fluid">
             <div class="navbar-header">
                 <!-- Collapsed Hamburger -->
@@ -18,16 +18,17 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{route('machine')}}">Machine</a></li>
                     @if(\Illuminate\Support\Facades\Auth::check())
-                        <li><a href="{{url('boissons')}}">Boissons</a></li>
-                        <li><a href="{{route('ingredients.index')}}">Ingredients</a></li>
-                        <li><a href="{{url('monnayeur')}}">Monnayeur</a></li>
-                        <li><a href="{{url('triBoissons')}}">triBoisson</a></li>
+                        @if(\Illuminate\Support\Facades\Auth::user()->role === 'admin')
+                            <li><a href="{{url('boissons')}}">Boissons</a></li>
+                            <li><a href="{{route('ingredients.index')}}">Ingredients</a></li>
+                            <li><a href="{{url('monnayeur')}}">Monnayeur</a></li>
+                            {{--<li><a href="{{url('triBoissons')}}">triBoisson</a></li>--}}
+                        @endif
                         <li><a href="{{route('ventes.index')}}">Ventes</a></li>
                     @endif
 
                 </ul>
-
-                <!-- Right Side Of Navbar -->
+            <!-- Right Side Of Navbar -->
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
