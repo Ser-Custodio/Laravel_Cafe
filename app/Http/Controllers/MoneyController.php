@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers ; //Définir l'emplacement 
 
-class MonnayeurController extends Controller {
+class moneyController extends Controller {
 	public function coins() {
         $tCoinStock = ["200"=>100,"100"=>100,"50"=>100,"20"=>100,"10"=>100,"5"=>100];
     	return view('monnayeur', ["coins" => $tCoinStock]);
@@ -10,7 +10,7 @@ class MonnayeurController extends Controller {
 }
 
 /*
-class MonnayeurController extends Controller {
+class moneyController extends Controller {
 	public function coins() {
         $coins = [200, 100, 50, 20, 10, 5];
         $stock=[100, 100, 100, 100, 100, 100];

@@ -40,9 +40,12 @@ Route::resource('ingredients', 'IngredientController')->middleware(['auth','role
 // Routes pour les Ventes
 Route::resource('ventes', 'VenteController');
 
+Route::post('ventes_search','VenteController@search')->name('search')->middleware(['auth','role']);
+
+
 
 // Routes pour le Monnayeur
-Route::get('monnayeur', 'MonnayeurController@coins')->middleware('auth','role');
+Route::get('monnayeur', 'moneyController@coins')->middleware('auth','role');
 
 
 // Routes pour authentification

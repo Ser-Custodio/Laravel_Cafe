@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ingredient;
+use App\User;
 use Illuminate\Http\Request;
 use App\Vente;
 use App\Boisson;
@@ -19,38 +20,59 @@ class VenteController extends Controller
     {
         $userId = Auth::id();
         if (!Auth::check()) {
-            return redirect()->route('machine')->with('error', 'You don\'t have permission for that');
+            return abort(404);
         }
         $ventes = Vente::orderBy('id');
         $boissons = Boisson::orderBy('name');
+        $users = User::orderBy('name')->get();
         if (Auth::user()->role === 'client') {
                 $ventes->where('user_id', $userId);
                 $boissons->whereHas('ventes', function ($query) use ($userId) {
                     $query->where('user_id', $userId);
                 });
         }
-        //$count = $count->get();
-
-        $ventes = $ventes->get();
-        $total = $ventes->sum('price');
-        $boissons = $boissons->get();
-
-        return view('ventes.index', ['sales' => $ventes, 'total' => $total, 'boissons' => $boissons/*, 'count'=>$count*/]);
-
-        // THE CODE WE HAD BEFORE
-
-//        }else if (Auth::user()->role === 'client') {
-//            $ventes = Vente::orderBy('id')->where('user_id', $userId)->get();
-//            $total = $ventes->sum('price');
-//            return view('ventes.index', ['sales' => $ventes, 'total' => $total]);
-//        }else{
-//            $ventes = Vente::all();
-//            $ventes->sum('price');
-//            return view('ventes.index', ['sales'=> $ventes, 'total' => $total]);
-//        }
+        $data =[
+            'sales' => $ventes->get(),
+            'total' => $ventes->sum('price'),
+            'boissons' => $boissons->get(),
+            'users' => $users
+        ];
+        return view('ventes.index', $data);
     }
 
-
+    // Function to make searches
+    public function search (Request $request){
+        $ventes = Vente::orderBy('id');
+//        if($request->input('boisson_id') < 1){
+//            $ventes = Vente::orderBy('id');
+//        }else
+        if($request->input('boisson_id') > 0) {
+            $idBoisson = $request->input('boisson_id');
+            $ventes = $ventes->where('boisson_id', $idBoisson);
+        }else {
+            $idUser = $request->input('user_id');
+            $ventes = $ventes->where('user_id', $idUser);
+        }
+        $data = [
+            'sales' => $ventes->get(),
+            'total' => $ventes->sum('price'),
+            'boissons' => Boisson::orderBy('name')->get(),
+            'users' => User::orderBy('id')->get()
+        ];
+        return view('ventes.index', $data);
+    }
+//    public function searchDUser (Request $request){
+//        $iduser = $request->input('user_id');
+//        $ventes = Vente::orderBy('id')->get();
+//        $data =[
+//            'sales' => $ventes->where('user_id', $idUser),
+//            'total' => $ventes->sum('price'),
+//            'boissons' => Boisson::orderBy('name')->get(),
+//            'users' => User::orderBy('id')->get()
+//        ];
+//
+//        return view('ventes.index', $data);
+//    }
     /**
      * Show the form for creating a new resource.
      *
@@ -85,12 +107,14 @@ class VenteController extends Controller
 
         // Modifier le stock du sucre
         $sucre = Ingredient::where('name','Sucre')->first();
-        $sucre->stock-=$request->input('nbSugar');
+        $sucre->stock-= $data['nbSugar'];
         $sucre->save();
-
         // Modifier le stock des ingredients
-
-
+        $ings = $vente->boisson->ingredients;
+        foreach ($ings as $ing){
+            $ing->stock = $ing->stock - $ing->pivot->quantity;
+            $ing->save();
+        }
         return redirect()->route('machine')->with('success', 'Enjoy your Drink');
     }
 
