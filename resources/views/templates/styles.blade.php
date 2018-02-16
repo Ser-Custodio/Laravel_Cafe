@@ -111,4 +111,8 @@
 /*    .login{
         margin-top: 100px;
     }*/
+
+    .ventes{
+        margin-top: 2000px;
+    }
 </style>

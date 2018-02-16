@@ -18,7 +18,7 @@
 </head>
 @include('templates/navbar')
 <body>
-    <div class="flex-center position-ref full-height">
+    <div class="flex-center position-ref">
         @if (Route::has('login'))
         {{-- <div class="top-right links">
             @auth

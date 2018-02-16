@@ -23,17 +23,11 @@ class VenteController extends Controller
         }
         $ventes = Vente::orderBy('id');
         $boissons = Boisson::orderBy('name');
-       // $count = Boisson::orderBy('id');
-
         if (Auth::user()->role === 'client') {
-            $ventes->where('user_id', $userId);
-            $boissons->whereHas('ventes', function ($query) use ($userId) {
-                $query->where('user_id', $userId);
-            })->get();
-//            foreach ($boissons as $boisson) {
-                //$count->withCount('ventes', function ($query) use ($userId) {
-                //    $query->where('user_id', $userId);
-               // })->get();
+                $ventes->where('user_id', $userId);
+                $boissons->whereHas('ventes', function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                });
         }
         //$count = $count->get();
 
@@ -93,6 +87,9 @@ class VenteController extends Controller
         $sucre = Ingredient::where('name','Sucre')->first();
         $sucre->stock-=$request->input('nbSugar');
         $sucre->save();
+
+        // Modifier le stock des ingredients
+
 
         return redirect()->route('machine')->with('success', 'Enjoy your Drink');
     }
