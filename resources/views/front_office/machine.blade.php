@@ -1,58 +1,111 @@
-@extends('templates/structure')
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Machine à Cafés</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js"></script>
+</head>
+<body>
+<div class="container">
 
-@section('title')
-    Machine à Café
-@endsection
-
-@section('TitlePageName')
-    Choisissez votre Boisson
-@endsection
-
-@section('content')
-    <div class='displays formula'>
-        <form CLASS="col-md-offset-2 col-md-8" method="post" action="{{ route('ventes.store') }}">
+    <div class='row'>
+        <form method="post" action="{{ route('ventes.store') }}">
             {{ csrf_field() }}
-            Available Drink: <br>
-            <div class="row table-responsive">
-                    <table class="table table-editBoissons table-hover table-bordered col-sm-12">
-                        <tr>
-                            <th class="col-md-2">NAME</th>
-                            <th class="col-md-2">PRICE</th>
-                            <th class="col-md-2">CHOIX</th>
-                        </tr>
-                        @foreach ($boisson as $uneBoisson)
-                            <tr>
-                                <td>{{ $uneBoisson->name }} </td>
-                                <td>{{ number_format($uneBoisson->price/100,2) }}€</td>
-                                <td><input type="radio" name="drink" value="{{ $uneBoisson->id }}"></td>
-                            </tr>
-                        @endforeach
-                    </table>
+            <div class='col-ms-2'>
+                <img src="img/Vue1/Choixboisson_tea.png" class="btnThe">
             </div>
-            <br>
-
-            Number of Sugar:<br>
-            <div class="table-responsive">
-            <table class="table tableSugar">
-                <tr>
-                    <th class="col-md-2">0</th>
-                    <th class="col-md-2">1</th>
-                    <th class="col-md-2">2</th>
-                    <th class="col-md-2">3</th>
-                    <th class="col-md-2">4</th>
-                    <th class="col-md-2">5</th>
-                </tr>
-                <tr>
-                    <td class="col-md-2"><input type="radio" name="nbSugar" value="0"></td>
-                    <td class="col-md-2"><input type="radio" name="nbSugar" value="1"></td>
-                    <td class="col-md-2"><input type="radio" name="nbSugar" value="2"></td>
-                    <td class="col-md-2"><input type="radio" name="nbSugar" value="3"></td>
-                    <td class="col-md-2"><input type="radio" name="nbSugar" value="4"></td>
-                    <td class="col-md-2"><input type="radio" name="nbSugar" value="5"></td>
-                </tr>
-            </table>
+            <div class="col-ms-2">
+                <img src="img/Vue1/Selection_sucre/button---inactive.png" class="btnMoins">
             </div>
-            <br><button class='btn btn-lg btn-success' type="submit">Commander</button>
+            <div class="col-ms-2">
+                <img src="img/Vue1/Selection_sucre/buttonPlusinactive.png" class="btnPlus">
+            </div>
         </form>
     </div>
-@endsection
+    <div>
+        <img src="img/Vue1/Choixboisson_Chocolat.png" class="btnChoc">
+    </div>
+    <div>
+        <img src="img/Vue1/Choixboisson_Latte.png" class="btnLat">
+    </div>
+    <div>
+        <img src="img/Vue1/Choixboisson_expresso.png" class="btnExp">
+    </div>
+    <div class='nbsugar container'>
+        <img class="sugar1" src="img/Vue1/Selection_sucre/1_sucre.png">
+        <img class="sugar2" src="img/Vue1/Selection_sucre/2_sucres.png">
+        <img class="sugar3" src="img/Vue1/Selection_sucre/3_sucres.png">
+        <img class="sugar4" src="img/Vue1/Selection_sucre/4_sucres.png">
+        <img class="sugar5" src="img/Vue1/Selection_sucre/5_sucres.png">
+    </div>
+
+    <div class='coins container'>
+        <div class='row'>
+            <div class='col-ms-2'>
+                <input type='image' class='2euros' src='img/Vue1/2euros_selec.png' disabled="true">
+                <input type='image' class='1euro' src='img/Vue1/1euro_selec.png' disabled="true">
+            </div>
+            <div class='col-ms-2'>
+                <input type='image' class='50cts' src='img/Vue1/50cen_selec.png' disabled="true">
+                <input type='image' class='20cts' src='img/Vue1/20cen_selec.png' disabled="true">
+            </div>
+            <div class='col-ms-2'>
+                <input type='image' class='10cts' src='img/Vue1/10cen_selec.png' disabled="true">
+                <input type='image' class='5cts' src='img/Vue1/5cen_selec.png' disabled="true">
+            </div>
+        </div>
+    </div>
+    <div class='container'>
+        <input type='image' class='reset' src="img/Vue1/button-cancel.png">
+    </div>
+    <div class='row'>
+        <div class='messageBoisson'>
+            <p class="boiChoi"></p>
+            <p class='infoPiecesRendues'></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class='messagePieces'>
+            <p class='affPieces'></p>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='messageRendu'>
+            <p class="monnaie"></p>
+        </div>
+    </div>
+    <div class='maintenance container'>
+        @if(\Illuminate\Support\Facades\Auth::check())
+            <a href="{{route('ventes.index')}}"> <input type='image' class='mtnance' src='img/Vue1/btn-mtn.png'></a>
+        @else
+            <a href="{{url('login')}}"> <input type='image' class='mtnance' src='img/Vue1/btn-mtn.png'></a>
+        @endif
+    </div>
+    <div class='monnayeur container'>
+        <img src="img/Vue1/rendu-monnaie.png" alt="monnayeur">
+    </div>
+    <button class="btn-valider btn btn-danger btn-lg">Valider</button>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 drink">
+            <img id="Mug" class="boisson" src="img/drink/Mug.png" alt="mug">
+            <img id="espresso" class="boisson" src="img/drink/espresso.gif" alt="espresso">
+            <img id="latte" class="boisson" src="img/drink/Latte.gif" alt="Latte">
+            <img id="tea" class="boisson" src="img/drink/Tea.gif" alt="Tea">
+            <img id="chocolate" class="boisson" src="img/drink/Chocolate.gif" alt="Chocolate">
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+</footer>
+</body>
+</html>

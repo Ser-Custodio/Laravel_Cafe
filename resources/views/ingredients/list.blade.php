@@ -16,10 +16,10 @@
                 <th>EDIT</th>
             </tr>
             @foreach ($ingredient as $unIngredient)
-            <tr>
-                <td>{{ $unIngredient->name }}</td>
-                <td><a href="{{ route('ingredients.show', $unIngredient->id) }}">Details</a></td>
-            </tr>
+                <tr>
+                    <td>{{ $unIngredient->name }}</td>
+                    <td><a href="{{ route('ingredients.show', $unIngredient->id) }}">Details</a></td>
+                </tr>
             @endforeach
         </table>
     </div>

@@ -36,21 +36,17 @@ Route::delete('boissons/{boisson}', 'BoissonsController@delete')->name('deleteDr
 // Routes pour les Ingredients
 Route::resource('ingredients', 'IngredientController')->middleware(['auth','role']);
 
-
 // Routes pour les Ventes
 Route::resource('ventes', 'VenteController');
-
 Route::post('ventes_search','VenteController@search')->name('search')->middleware(['auth','role']);
-
-
 
 // Routes pour le Monnayeur
 Route::get('monnayeur', 'moneyController@coins')->middleware('auth','role');
 
-
 // Routes pour authentification
 Auth::routes();
-
 Route::get('/', 'HomeController@index')->name('home')->middleware('auth','role');
-
 Route::get('/', 'BoissonsController@listeBoissonsDispo')->name('machine');
+
+//Routes pour utilisateurs
+Route::resource('users', 'UserController');

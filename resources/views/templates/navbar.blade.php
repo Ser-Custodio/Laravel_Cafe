@@ -22,7 +22,7 @@
                             <li><a href="{{url('boissons')}}">Boissons</a></li>
                             <li><a href="{{route('ingredients.index')}}">Ingredients</a></li>
                             <li><a href="{{url('monnayeur')}}">Monnayeur</a></li>
-                            <li><a href="{{url('utilisateurs')}}">Utilisateurs</a></li>
+                            <li><a href="{{route('users.index')}}">Utilisateurs</a></li>
                         @endif
                         <li><a href="{{route('ventes.index')}}">Ventes</a></li>
                     @endif

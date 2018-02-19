@@ -19,11 +19,13 @@ Edit-Boissons
                     <th>ID</th> 
                     <th>NAME</th>                
                     <th>PRICE</th>
+                    <th>STATUS</th>
                 </tr>
                 <tr>                    
                     <td>{{ $boisson->id }} </td>
                     <td>{{ $boisson->name }} </td>
                     <td>{{ number_format($boisson->price/100,2) }} </td>
+                    <td>@if ($boisson->active === 1) Active @else Inactive @endif</td>
                 </tr>
             </table>           
         </div>
@@ -52,7 +54,7 @@ Edit-Boissons
             <form method="post">
               {{ csrf_field() }}
                 <input type="hidden" name="_method" value="delete">
-                <button class="btn btn-lg btn-primary" type="submit">Supprimer</button>
+                <button class="btn btn-lg btn-primary" type="submit">@if($boisson->ventes->count() > 0) Désactiver @else Supprimer @endif</button>
             </form>
         </div>
         <div class="visible-xs"><br></div>

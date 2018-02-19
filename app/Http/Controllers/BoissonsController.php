@@ -14,13 +14,43 @@ class BoissonsController extends Controller
     public function listeBoissons()
     {
         $boissons = Boisson::orderBy('name', 'asc')->get();
+
         return view('boissons', ["boisson" => $boissons]);
     }
 
+//    public function listeBoissonsDispo()
+//    {
+//        $boissons = Boisson::orderBy('name', 'asc')->get();
+//        $nbSugar = Ingredient::where('name','Sucre')->first()->stock;
+//
+//
+//        return view('front_office.machine', ["boisson" => $boissons, 'nbSugar' => $nbSugar]);
+//    }
+  // liste de boissons disponibles selon les stocks
     public function listeBoissonsDispo()
     {
         $boissons = Boisson::orderBy('name', 'asc')->get();
-        return view('front_office.machine', ["boisson" => $boissons]);
+        $nbSugar = Ingredient::where('name','Sucre')->first()->stock;
+        // Modifier le stock des ingredients
+        foreach ($boissons as $boisson) {
+            if ($boisson->ingredients->count() < 1) {
+                $boisson->dispo = false;
+            } else {
+                $ings = $boisson->ingredients;
+                $boisson->dispo = true;
+                foreach ($ings as $ing) {
+                    if ($ing->stock < $ing->pivot->quantity) {
+                        $boisson->dispo = false;
+                    };
+                };
+            };
+        };
+        $data = [
+            'boisson' => $boissons,
+            'nbSugar' => $nbSugar
+        ];
+
+        return view('front_office.machine', $data);
     }
 
     public function prixCroissant()
@@ -94,7 +124,10 @@ class BoissonsController extends Controller
             'name' => $request->input('name'),
             'price' => $request->input('price'),
         ];
-
+        $drinkExist = Boisson::where('name',$data['name'])->get();
+        if($drinkExist->isNotEmpty()){
+            return back()->with('error','La boisson '.$data['name'].' existe deja dans la liste');
+        }
         $addDrink = Boisson::create($data);
         return redirect()->route('addRecipe', ['boisson' => $addDrink->id]);
     }
@@ -106,19 +139,27 @@ class BoissonsController extends Controller
         $data = [
             'name' => $request->input('name'),
             'price' => $request->input('price'),
+            'active' => $request->input('active'),
         ];
 
         $modDrink->name = $data['name'];
         $modDrink->price = $data['price'];
+        $modDrink->active = $data['active'];
         $modDrink->save();
 
         return redirect('boissons');
     }
-
     public function delete(Boisson $boisson)
     {
-        $boisson->delete();
-        return redirect('boissons');
+        if($boisson->ventes()->count() > 0){
+            $boisson->active = false;
+            $boisson->save();
+            return back()->with('info', 'La boisson "'.$boisson->name.'" a des ventes associées, alors elle a été désactivée.');
+        };
+            $boisson->delete();
+            return redirect('boissons')->with('info', 'La boisson "'.$boisson->name.'" a bien été supprimé.');
+
+
     }
 
 }

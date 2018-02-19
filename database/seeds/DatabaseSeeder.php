@@ -27,5 +27,10 @@ class DatabaseSeeder extends Seeder
             'password' => '123456',
             'role' => 'admin'
         ]);
+        Ingredient::create([
+            'id' => 1,
+            'name' => 'Sucre',
+            'stock' => 0,
+        ]);
     }
 }

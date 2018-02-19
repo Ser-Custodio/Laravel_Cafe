@@ -25,6 +25,7 @@ class VenteController extends Controller
         $ventes = Vente::orderBy('id');
         $boissons = Boisson::orderBy('name');
         $users = User::orderBy('name')->get();
+        $totalGlobal = $ventes->sum('price');
         if (Auth::user()->role === 'client') {
                 $ventes->where('user_id', $userId);
                 $boissons->whereHas('ventes', function ($query) use ($userId) {
@@ -35,17 +36,17 @@ class VenteController extends Controller
             'sales' => $ventes->get(),
             'total' => $ventes->sum('price'),
             'boissons' => $boissons->get(),
-            'users' => $users
+            'users' => $users,
+            'totalGlobal' => $totalGlobal,
         ];
+
         return view('ventes.index', $data);
     }
 
     // Function to make searches
     public function search (Request $request){
         $ventes = Vente::orderBy('id');
-//        if($request->input('boisson_id') < 1){
-//            $ventes = Vente::orderBy('id');
-//        }else
+        $totalGlobal = $ventes->sum('price');
         if($request->input('boisson_id') > 0) {
             $idBoisson = $request->input('boisson_id');
             $ventes = $ventes->where('boisson_id', $idBoisson);
@@ -57,22 +58,11 @@ class VenteController extends Controller
             'sales' => $ventes->get(),
             'total' => $ventes->sum('price'),
             'boissons' => Boisson::orderBy('name')->get(),
-            'users' => User::orderBy('id')->get()
+            'users' => User::orderBy('id')->get(),
+            'totalGlobal' => $totalGlobal,
         ];
         return view('ventes.index', $data);
     }
-//    public function searchDUser (Request $request){
-//        $iduser = $request->input('user_id');
-//        $ventes = Vente::orderBy('id')->get();
-//        $data =[
-//            'sales' => $ventes->where('user_id', $idUser),
-//            'total' => $ventes->sum('price'),
-//            'boissons' => Boisson::orderBy('name')->get(),
-//            'users' => User::orderBy('id')->get()
-//        ];
-//
-//        return view('ventes.index', $data);
-//    }
     /**
      * Show the form for creating a new resource.
      *
@@ -105,11 +95,11 @@ class VenteController extends Controller
         ];
         $vente = Vente::create($data);
 
-        // Modifier le stock du sucre
+        // Modifier le stock du sucre selon la vente
         $sucre = Ingredient::where('name','Sucre')->first();
         $sucre->stock-= $data['nbSugar'];
         $sucre->save();
-        // Modifier le stock des ingredients
+        // Modifier le stock des ingredients selon la vente
         $ings = $vente->boisson->ingredients;
         foreach ($ings as $ing){
             $ing->stock = $ing->stock - $ing->pivot->quantity;

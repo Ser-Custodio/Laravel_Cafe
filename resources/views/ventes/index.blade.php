@@ -24,10 +24,11 @@
                             <td><select name="boisson_id">
                                     <option value="0">Choose Drink</option>
                                     @foreach($boissons as $boisson)
-                                    <option value="{{ $boisson->id }}">{{ $boisson->name }}</option>
+                                        <option value="{{ $boisson->id }}">{{ $boisson->name }}</option>
                                     @endforeach
                                 </select>
-                                    <button name="drinkSearch" class="btnDrink btn btn-md btn-primary"><i class="fas fa-search"></i></button>
+                                <button name="drinkSearch" class="btnDrink btn btn-md btn-primary"><i
+                                            class="fas fa-search"></i></button>
                             </td>
                             <td><select name="user_id">
                                     <option value="0">Choose User</option>
@@ -35,26 +36,37 @@
                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                                     @endforeach
                                 </select>
-                                <button name="userSearch" class="btnUser btn btn-md btn-primary"><i class="fas fa-search"></i></button>
+                                <button name="userSearch" class="btnUser btn btn-md btn-primary"><i
+                                            class="fas fa-search"></i></button>
                             </td>
                         </tr>
                     </table>
                 </form>
-                <a href="{{ route('ventes.index') }}"><button class="btn btn-primary" type="submit">Toutes les Ventes</button></a>
+                <a href="{{ route('ventes.index') }}">
+                    <button class="btn btn-primary" type="submit">Toutes les Ventes</button>
+                </a>
         </div>
-        <div class="col-md-offset-1 col-md-4">
+        <div class="col-md-offset-1 col-md-5">
             <h1>Recap des Ventes</h1>
-            <table class="table table-responsive search-table">
+            <table class="table table-responsive">
                 <tr>
                     <th>Boisson</th>
                     <th>Nombre de Ventes</th>
+                    <th>Cash</th>
+
                 </tr>
                 @foreach($boissons as $boisson)
                     <tr>
                         <td>{{ $boisson->name }}</td>
                         <td>{{ $boisson->ventes->count() }}</td>
+                        <td>{{ number_format($boisson->ventes->sum('price')/100,2) }}</td>
                     </tr>
                 @endforeach
+                <tr>
+                    <td><strong>TOTAL</strong></td>
+                    <td></td>
+                    <td><strong>{{ number_format($totalGlobal/100,2) }}</strong></td>
+                </tr>
             </table>
         </div>
         @endif
@@ -85,8 +97,8 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>TOTAL</td>
-                <td>{{ number_format($total/100,2) }}</td>
+                <td><strong>TOTAL</strong></td>
+                <td><strong>{{ number_format($total/100,2) }}</strong></td>
                 <td></td>
             </tr>
         </table>
