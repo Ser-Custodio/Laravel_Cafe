@@ -89,6 +89,20 @@ let drinkSelect;
     });
 
 ///////////////////Button + and - sugar when clicked //////////////
+    $('.choiceSugar').val(0);
+    $('.acucarMoins').click(function(){
+        let current = parseInt($('.choiceSugar').val());
+        if (current > 0) {
+            $('.choiceSugar').val(current - 1);
+        }
+    });
+    $('.acucarPlus').click(function(){
+        let current = parseInt($('.choiceSugar').val());
+        if (current < 5) {
+            $('.choiceSugar').val(current + 1);
+        }
+    });
+
       $('.btnPlus').mousedown(function(){
         $('.btnPlus').attr('src','img/Vue1/Selection_sucre/buttonPlusactive.png')
       })

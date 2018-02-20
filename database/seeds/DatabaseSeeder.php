@@ -31,6 +31,6 @@ class DatabaseSeeder extends Seeder
             'id' => 1,
             'name' => 'Sucre',
             'stock' => 0,
-        ]);
+        ]);.
     }
 }

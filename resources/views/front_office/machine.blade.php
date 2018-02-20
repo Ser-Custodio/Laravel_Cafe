@@ -21,13 +21,13 @@
             </div>
             <div class="col-ms-2">
                 <label>
-                    <input type="radio" name="nbSugar" value="0"><img src="img/Vue1/Selection_sucre/button---inactive.png" class="btnMoins">
+                    <input class="choiceSugar" type="number" name="nbSugar" min="0" max="5">
                 </label>
+                <img class="acucarMoins btnMoins" src="img/Vue1/Selection_sucre/button---inactive.png" >
             </div>
             <div class="col-ms-2">
-                <label>
-                    <input type="radio" name="nbSugar" value="1"><img src="img/Vue1/Selection_sucre/buttonPlusinactive.png" class="btnPlus">
-                </label>
+                <img class="acucarPlus btnPlus" src="img/Vue1/Selection_sucre/buttonPlusinactive.png">
+
             </div>
     </div>
     <div><label>

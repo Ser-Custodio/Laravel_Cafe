@@ -118,10 +118,10 @@ body{
 	/*---------------------------------------------------------------------*/
 }
 
-label > input{
-	visibility: hidden; /* Makes input not-clickable */
-	position: absolute; /* Remove input from document flow */
-}
+/*label > input {*/
+	/*visibility: hidden; !* Makes input not-clickable *!*/
+	/*position: absolute; !* Remove input from document flow *!*/
+/*}*/
 label > input + img{ /* IMAGE STYLES */
 	/*cursor:pointer;*/
 	/*border:2px solid transparent;*/
