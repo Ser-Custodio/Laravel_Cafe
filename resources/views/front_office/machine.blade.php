@@ -11,30 +11,41 @@
 </head>
 <body>
 <div class="container">
-
+    <form method="post" action="{{ route('ventes.store') }}">
     <div class='row'>
-        <form method="post" action="{{ route('ventes.store') }}">
+
             {{ csrf_field() }}
+
             <div class='col-ms-2'>
-                <img src="img/Vue1/Choixboisson_tea.png" class="btnThe">
+                <label><input type="radio" name="drink" value="1"><img src="img/Vue1/Choixboisson_tea.png" class="btnThe"></label>
             </div>
             <div class="col-ms-2">
-                <img src="img/Vue1/Selection_sucre/button---inactive.png" class="btnMoins">
+                <label>
+                    <input type="radio" name="nbSugar" value="0"><img src="img/Vue1/Selection_sucre/button---inactive.png" class="btnMoins">
+                </label>
             </div>
             <div class="col-ms-2">
-                <img src="img/Vue1/Selection_sucre/buttonPlusinactive.png" class="btnPlus">
+                <label>
+                    <input type="radio" name="nbSugar" value="1"><img src="img/Vue1/Selection_sucre/buttonPlusinactive.png" class="btnPlus">
+                </label>
             </div>
-        </form>
+    </div>
+    <div><label>
+            <input type="radio" name="drink" value="2"><img src="img/Vue1/Choixboisson_Chocolat.png" class="btnChoc">
+        </label>
     </div>
     <div>
-        <img src="img/Vue1/Choixboisson_Chocolat.png" class="btnChoc">
+        <label>
+            <input type="radio" name="drink" value="3"><img src="img/Vue1/Choixboisson_Latte.png" class="btnLat">
+        </label>
     </div>
     <div>
-        <img src="img/Vue1/Choixboisson_Latte.png" class="btnLat">
+        <label>
+            <input type="radio" name="drink" value="4"><img src="img/Vue1/Choixboisson_expresso.png" class="btnExp">
+        </label>
     </div>
-    <div>
-        <img src="img/Vue1/Choixboisson_expresso.png" class="btnExp">
-    </div>
+        <button class="btn-valider btn btn-danger btn-lg">Valider</button>
+
     <div class='nbsugar container'>
         <img class="sugar1" src="img/Vue1/Selection_sucre/1_sucre.png">
         <img class="sugar2" src="img/Vue1/Selection_sucre/2_sucres.png">
@@ -42,7 +53,7 @@
         <img class="sugar4" src="img/Vue1/Selection_sucre/4_sucres.png">
         <img class="sugar5" src="img/Vue1/Selection_sucre/5_sucres.png">
     </div>
-
+    </form>
     <div class='coins container'>
         <div class='row'>
             <div class='col-ms-2'>
@@ -88,7 +99,10 @@
     <div class='monnayeur container'>
         <img src="img/Vue1/rendu-monnaie.png" alt="monnayeur">
     </div>
-    <button class="btn-valider btn btn-danger btn-lg">Valider</button>
+    {{--<form method="post" action="{{ route('ventes.store') }}">--}}
+        {{--{{ csrf_field() }}--}}
+       {{----}}
+    {{--</form>--}}
 </div>
 <div class="container">
     <div class="row">

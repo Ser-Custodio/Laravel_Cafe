@@ -87,12 +87,14 @@ class VenteController extends Controller
             $user = 1;
         };
         $price = Boisson::find($request->input('drink'))->price;
+//        dd('price');
         $data = [
             'nbSugar' => $request->input('nbSugar'),
             'boisson_id' => $request->input('drink'),
             'price' => $price,
             'user_id' => $user
         ];
+
         $vente = Vente::create($data);
 
         // Modifier le stock du sucre selon la vente
