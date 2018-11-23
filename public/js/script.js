@@ -44,10 +44,12 @@ $(document).ready(function(){
 let drinkSelect;
 
     $('.btnLat').click(function(){
+        let idBoisson = $('.drink3').val();
         selectDrink(true, 'latte');
         drinkSelect = "latte";
         $('.boiChoi').text('Latte – 0.50 cts');
         $('.coins input').prop('disabled', false);
+        console.log(idBoisson);
     });
     $('.btnLat').dblclick(function(){
         selectDrink(false, 'latte');// Implémentez​ ​une​ ​fonction​ ​​resetDrink()​ ​​qui​ ​désélectionne​ ​toutes​ ​les​ ​boissons: le dblclick permet de reset les drink//
@@ -92,6 +94,7 @@ let drinkSelect;
     $('.choiceSugar').val(0);
     $('.acucarMoins').click(function(){
         let current = parseInt($('.choiceSugar').val());
+        console.log(current);
         if (current > 0) {
             $('.choiceSugar').val(current - 1);
         }
@@ -333,60 +336,5 @@ function renduMonnaie(sommeEntree, cout){
     $(".boisson").click(function(){
       resetAll();
     });
-/////////////////Axel/////////////////
-
-
-
-
-/////////////////SCRIPT VUE 2/////////////////
-    
-  $('.rempMon').click(function(){
-    $('.cinqCts').text('50');
-    $('.dixCts').text('50');
-    $('.vingtCts').text('50');
-    $('.cinquanteCts').text('50');
-    $('.unEu').text('50');
-    $('.deuxEu').text('50');
-  })
-
-    $('.rempIng').mousedown(function(){
-        $('.rempIng').attr('src','img/Vue1/Selection_sucre/button-+-active.png')
-      })
-      $('.rempIng').mouseup(function(){
-        $('.rempIng').attr('src','img/Vue1/Selection_sucre/button-+-inactive.png')
-      })
-      $('.rempMon').mousedown(function(){
-        $('.rempMon').attr('src','img/Vue1/Selection_sucre/button-+-active.png')
-      })
-      $('.rempMon').mouseup(function(){
-        $('.rempMon').attr('src','img/Vue1/Selection_sucre/button-+-inactive.png')
-      })
-
-
-
-    function stock (drink,validated){
-        if (drink === latte && validated === true){
-            $('.stockeau').remove(4);
-            $('.stocklait').remove(1);
-            $('.stockcafe').remove(1);
-            $('.stockmug').remove(1);
-        }else if(drink === expresso && validated === true){
-            $('.stockeau').remove(1);
-            $('.stockcafe').remove(2);
-            $('.stockmug').remove(1);
-    
-        }else if(drink === tea && validated === true){
-            $('.stockeau').remove(4);
-            $('.stocktea').remove(1);
-            $('.stockmug').remove(1);
-        } else if(drink === chocolat && validated === true){
-            $('.stockeau').remove(4);
-            $('.stockchoco').remove(1);
-            $('.stocklait').remove(2);
-            $('.stockmug').remove(1);
-        }
-    };
-
-
 
 });

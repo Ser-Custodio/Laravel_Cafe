@@ -46,7 +46,7 @@ class IngredientController extends Controller
             'stock' => $request->input('stock'),
         ];
         $ingExist = Ingredient::where('name',$data['name'])->get();
-        if($ingExist){
+        if($ingExist->isNotEmpty()){
             return back()->with('error','L\'ingredient '.$data['name'].' existe deja dans la liste');
         }
         $addIng = Ingredient::create($data);

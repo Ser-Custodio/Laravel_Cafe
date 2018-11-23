@@ -17,7 +17,7 @@
             {{ csrf_field() }}
 
             <div class='col-ms-2'>
-                <label><input type="radio" name="drink" value="1"><img src="img/Vue1/Choixboisson_tea.png" class="btnThe"></label>
+                <label><input class="drink1" type="radio" name="drink" value="1" required><img src="img/Vue1/Choixboisson_tea.png" class="btnThe"></label>
             </div>
             <div class="col-ms-2">
                 <label>
@@ -31,17 +31,17 @@
             </div>
     </div>
     <div><label>
-            <input type="radio" name="drink" value="2"><img src="img/Vue1/Choixboisson_Chocolat.png" class="btnChoc">
+            <input class="drink2" type="radio" name="drink" value="2" required><img src="img/Vue1/Choixboisson_Chocolat.png" class="btnChoc">
         </label>
     </div>
     <div>
         <label>
-            <input type="radio" name="drink" value="3"><img src="img/Vue1/Choixboisson_Latte.png" class="btnLat">
+            <input class="drink3" type="radio" name="drink" value="3" required><img src="img/Vue1/Choixboisson_Latte.png" class="btnLat">
         </label>
     </div>
     <div>
         <label>
-            <input type="radio" name="drink" value="4"><img src="img/Vue1/Choixboisson_expresso.png" class="btnExp">
+            <input class="drink4" type="radio" name="drink" value="4" required><img src="img/Vue1/Choixboisson_expresso.png" class="btnExp">
         </label>
     </div>
         <button class="btn-valider btn btn-danger btn-lg">Valider</button>
